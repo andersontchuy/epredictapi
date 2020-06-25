@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>API de Dados | PredictApp</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <div class="container">
+        <h2>API de Dados</h2>
+        <p><em>PredictApp</em></p>
+        <p>
+            Essa página descreve a API de Dados, uma forma automatizada de obter acesso
+            aos modelos preditivos de retenção e evasão de alunos, de forma geral seu uso
+            possibilita integrar essas informações a outros sistemas. Por esse motivo, 
+            os métodos têm CORS configurado de maneira a permitir chamadas de outros domínios. 
+            A documentação abaixo descreve, com exemplos, como utilizar a interface de dados.
+        </p>
+    </div>
+    <hr>
+    <div>
+        <h3>Acesso API de evasão</h3>
+        <p> O acesso a API de dados é público, não é necessario criar uma conta 
+            tampuco autenticar.
+        </p>
+    </div>
+    <hr>
+    <div>
+        <h3>Estrutura das Requisições</h3>
+        <blockquote>
+            <h4>URL</h4>
+            <p>
+                É necessário fazer uma chamada HTTP, método <strong>GET</strong>, 
+                para URL 
+                <span><strong>
+                    http:127.0.0.1:5000/api/
+                    <code>predict</code>
+                    /
+                    <code>method</code>
+                </strong></span>
+            </p>
+            <h4>Parâmetros de URL</h4>
+            <p>Dois parâmetros são obrigatórios e presentes em todas requisições:</p>
+            <div class="tab">
+                <i class="fa fa-angle-right"></i>
+                <code>predict</code>: Qual predição se quer fazer
+                <div class="tab">
+                    <strong>Tipo:</strong>
+                    <span>String</span>
+                    <br>
+                    <Strong>Domínio de dados</Strong>
+                    <br>
+                    <div class="tab-domain">
+                        <span>evasion</span> : para previsão de evasão
+                        <br>
+                        <spam>retention</spam> : para previsão de retenção
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="tab">
+                <i class="fa fa-angle-right"></i>
+                <code>method</code>: Metódo da API de Dados requisitado
+                <div class="tab">
+                    <strong>Tipo:</strong>
+                    <span>String</span>
+                    <br>
+                    <Strong>Domínio de dados</Strong>
+                    <br>
+                    <div class="tab-domain">
+                        <span>student</span> : consulta por estudante
+                        <br>
+                        <spam>period</spam> : consulta por ano.periodo
+                        <br>
+                        <spam>course</spam> : consulta por curso
+                    </div>
+                </div>
+            </div>
+        </blockquote>
+    </div>
+</body>
+</html>
