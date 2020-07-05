@@ -1,7 +1,8 @@
 #! /usr/bin/env python
-from flask import Flask, jsonify, render_template, request
 import json, random
-import normalize, model
+from flask import Flask, jsonify, render_template, request
+from model import mostraPredicaoGeral
+from model import mostraPredicaoPorCurso
 
 app = Flask(__name__)
 
@@ -17,10 +18,9 @@ def show_doc():
     return render_template('document.html')
 
 # rota predição de evasão todos os cursos
-@app.route('/evasao', methods=['GET'])
+@app.route('/evasao/', methods=['GET'])
 def prever_evasao():
-    dado = normalize.normalizaDados(dados)
-    result = model.mostraPredicaoGeral(dado)
+    result = mostraPredicaoGeral(dados)
     return jsonify(result), 200
 
 # rota predição de evasão por aluno
@@ -55,32 +55,11 @@ def prever_evasao_aluno(matricula):
 # rota predição de evasão por curso
 @app.route('/evasao/curso/<string:curso>', methods=['GET'])
 def prever_evasao_por_curso(curso):
-    curso_list = []
-    for dado in dados:
-        if dado['curso'].lower() == curso.lower():
-            curso_list.append({
-                'matricula': str(dado['matricula']),
-                'turno': dado['turno'],
-                'cidade': dado['cidade_endereco'],
-                'ano_ingresso': str(dado['ano_ingresso']),
-                'forma_ingresso': dado['forma_ingresso'],
-                'categoria_ingresso': dado['categoria_ingresso'],
-                'sexo': dado['sexo'],
-                'cor_raca': dado['cor_raca'],
-                'media_global_aluno': str(dado['media_global_aluno']),
-                'media_global_curso': str(dado['media_global_curso']),
-                'percentual_integralizado': str(dado['percentual_integralizado']),
-                'escola_publica': dado['escola_publica'],
-                'score': str(round(random.random(), 4))
-            })
-    if len(curso_list) == 0:
+    result = mostraPredicaoPorCurso(dados, curso)
+    if result == 0:
         return jsonify({'error': 'not found'}), 404
-    percent = round((len(curso_list)/3)/len(curso_list)*100, 2)
-    return jsonify({
-        'total_aluno': str(len(curso_list)), 
-        'total_evasao': str(len(curso_list)/3), 
-        'percentual_evasao': str(percent),  
-        'dado_aluno': curso_list}), 200 
+    return jsonify(result), 200
+
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)
