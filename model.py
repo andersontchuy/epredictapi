@@ -23,12 +23,11 @@ def listaAlunoPredito(lista):
       predicao = preveEvasao(lista[aluno])
       if predicao == 'sim':
          lista_aluno[aluno] = lista[aluno]
-
    return lista_aluno
 
 def listaAlunoPorCurso(lista, curso):
     lista_aluno = []
-    [lista_aluno.append(dado[0]) for dado in lista if dado[0] == curso]
+    [lista_aluno.append(dado) for dado in lista if dado['curso'] == curso]
     return lista_aluno
 
 def separaAlunoPorCurso(lista):
@@ -72,27 +71,43 @@ def mostraPredicaoGeral(lista):
 
 def mostraPredicaoPorCurso(lista, id_curso):
    if id_curso == 'a' or id_curso == 'cc':
-      curso = 1
+      curso = 'A'
    elif id_curso == 'b' or id_curso == 'es':
-      curso = 2
+      curso = 'B'
    elif id_curso == 'c' or id_curso == 'si':
-      curso = 3
+      curso = 'C'
    else:
       return 0
-      
-   nlista = normalizaDados(lista)
-   lista_aluno = listaAlunoPorCurso(nlista, curso)
-   lista_evasao = listaAlunoPredito(nlista)
-   lista_evasao_curso = listaAlunoPorCurso(list(lista_evasao.values()), curso)
-   
 
-   total_aluno = len(lista_aluno)
-   total_evasao = len(lista_evasao_curso)
-   percentual = int(round((total_evasao/total_aluno) * 100, 2))
+   nlista = normalizaDados(lista)
+   lista_predicao = listaAlunoPredito(nlista)
+   lista_aluno_predito = []
+   [lista_aluno_predito.append(lista[key]) for key in lista_predicao.keys()]  
+   lista_aluno_predito_curso = listaAlunoPorCurso(lista_aluno_predito, curso)
+
+   total_aluno_curso = len(listaAlunoPorCurso(lista, curso))
+   total_evasao = len(lista_aluno_predito_curso)
+   percentual = int(round((total_evasao/total_aluno_curso) * 100, 0))
+
+   dado_aluno = []
+   for dado in lista_aluno_predito_curso:
+      dado_aluno.append({
+         'matricula': str(dado['matricula']),
+         'turno': dado['turno'],
+         'forma_ingresso': dado['forma_ingresso'],
+         'ano_ingresso': str(dado['ano_ingresso']),
+         'sexo': dado['sexo'],
+         'cor_raca': dado['cor_raca'],
+         
+         'percentual_integralizado': str(dado['percentual_integralizado']),
+         'escola_publica': dado['escola_publica']
+      })
 
    result = {
-      'total_aluno': str(total_aluno),
+      'total_aluno': str(total_aluno_curso),
       'total_evasao': str(total_evasao),
       'percentual_evasao': str(percentual),
+      'lista_aluno': dado_aluno
    }
+   
    return result
