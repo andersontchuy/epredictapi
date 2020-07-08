@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-import json, random
+import json, random, os
 from flask import Flask, jsonify, render_template, request
 from model import mostraPredicaoGeral
 from model import mostraPredicaoPorCurso
@@ -62,5 +62,9 @@ def prever_evasao_por_curso(curso):
     return jsonify(result), 200
 
 
+# if __name__ == "__main__":
+#     app.run(host='127.0.0.1', port=5000, debug=True)
+
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
