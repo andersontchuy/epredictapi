@@ -6,6 +6,7 @@ from model import mostraPredicaoPorCurso
 
 app = Flask(__name__)
 
+# dados atualizados em: 07.07.2020
 dados = json.load(open('./data/alunos_ativos.json'))
 
 @app.route('/', methods=['GET'])

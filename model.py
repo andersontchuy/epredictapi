@@ -13,11 +13,6 @@ def calculaProbabilidade(aluno):
    return prob
 
 def listaAlunoPredito(lista):
-   # lista_aluno = []
-   # for aluno in range(len(lista)):
-   #    predicao = preveEvasao(lista[aluno])
-   #    if predicao == 'sim':
-   #       lista_aluno.append(lista[aluno])
    lista_aluno = {}
    for aluno in range(len(lista)):
       predicao = preveEvasao(lista[aluno])
@@ -41,12 +36,12 @@ def separaAlunoPorCurso(lista):
 def mostraPredicaoGeral(lista):
    nlista = normalizaDados(lista)
    alunos = listaAlunoPredito(nlista)
-   cc, es, si = separaAlunoPorCurso(nlista) # dividindo todos os alunos
+   cc, es, si = separaAlunoPorCurso(nlista) # todos os alunos
    qcc = len(cc)
    qes = len(es)
    qsi = len(si)
    cc, es, si = [], [], []
-   cc, es, si = separaAlunoPorCurso(list(alunos.values())) # dividindo alunos preditos
+   cc, es, si = separaAlunoPorCurso(list(alunos.values())) # alunos preditos
    qecc = len(cc)
    qees = len(es)
    qesi = len(si)
@@ -71,11 +66,11 @@ def mostraPredicaoGeral(lista):
 
 def mostraPredicaoPorCurso(lista, id_curso):
    if id_curso == 'a' or id_curso == 'cc':
-      curso = 'A'
+      curso = 'CIÊNCIA DA COMPUTAÇÃO'
    elif id_curso == 'b' or id_curso == 'es':
-      curso = 'B'
+      curso = 'ENGENHARIA DE SOFTWARE'
    elif id_curso == 'c' or id_curso == 'si':
-      curso = 'C'
+      curso = 'SISTEMAS DE INFORMAÇÃO'
    else:
       return 0
 
@@ -98,7 +93,6 @@ def mostraPredicaoPorCurso(lista, id_curso):
          'ano_ingresso': str(dado['ano_ingresso']),
          'sexo': dado['sexo'],
          'cor_raca': dado['cor_raca'],
-         
          'percentual_integralizado': str(dado['percentual_integralizado']),
          'escola_publica': dado['escola_publica']
       })
