@@ -3,80 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API de Dados | PredictApp</title>
+    <title>API de Dados | ePredict</title>
+    <link href="../static/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="container">
-        <a href="/"><h2>PredictApp</h2></a>
-        <p><em>API de Dados</em></p>
-        <p>
-            Essa página descreve a API de Dados, uma forma automatizada de obter acesso
-            aos modelos preditivos de retenção e evasão de alunos, de forma geral seu uso
-            possibilita integrar essas informações a outros sistemas. Por esse motivo, 
-            os métodos têm CORS configurado de maneira a permitir chamadas de outros domínios. 
-            A documentação abaixo descreve, com exemplos, como utilizar a interface de dados.
-        </p>
-    </div>
-    <hr>
-    <div>
-        <h3>Acesso API de evasão</h3>
-        <p> O acesso a API de dados é público, não é necessario criar uma conta 
-            tampuco autenticar.
-        </p>
-    </div>
-    <hr>
-    <div>
-        <h3>Estrutura das Requisições</h3>
-        <blockquote>
-            <h4>URL</h4>
+        <div class="header">
+            <a href="/"><h2>ePredict API</h2></a>
+        </div>
+        <div>
+            <br/>
+            <em>API de Dados</em>
             <p>
-                É necessário fazer uma chamada HTTP, método <strong>GET</strong>, 
-                para URL 
-                <span><strong>
-                    http:127.0.0.1:5000/api/
-                    <code>predict</code>
-                    /
-                    <code>method</code>
-                </strong></span>
+                Essa página descreve a API de Dados, uma forma automatizada de obter acesso
+                aos modelos preditivos de evasão de alunos de graduação, de forma geral seu uso
+                possibilita integrar essas informações a outros sistemas. Por esse motivo, 
+                os métodos têm CORS configurado de maneira a permitir chamadas de outros domínios. 
+                A documentação abaixo descreve, com exemplos, como utilizar a interface de dados.
             </p>
-            <h4>Parâmetros de URL</h4>
-            <p>Dois parâmetros são obrigatórios e presentes em todas requisições:</p>
-            <div class="tab">
-                <i class="fa fa-angle-right"></i>
-                <code>predict</code>: Qual predição se quer fazer
+        </div>
+        <hr>
+        <div>
+            <h3>Acesso API de evasão</h3>
+            <p> O acesso a API de dados é público, não é necessario criar uma conta 
+                tampuco autenticar.
+            </p>
+        </div>
+        <hr>
+        <div>
+            <h3>Estrutura das Requisições</h3>
+            <blockquote>
+                <h4>URL</h4>
+                <p>
+                    É necessário fazer uma chamada HTTP, método <strong>GET</strong>, 
+                    para URL 
+                    <span><strong>
+                        http://epredictapi.herokuapp.com/
+                        <code>predict</code>
+                        /
+                        <code>method</code>
+                    </strong></span>
+                </p>
+                <h4>Parâmetros de URL</h4>
+                <p>Exsitem dois parâmetros presentes nas requisições:</p>
                 <div class="tab">
-                    <strong>Tipo:</strong>
-                    <span>String</span>
-                    <br>
-                    <Strong>Domínio de dados</Strong>
-                    <br>
-                    <div class="tab-domain">
-                        <span>evasion</span> : para previsão de evasão
+                    <i class="fa fa-angle-right"></i>
+                    <code><strong>predict:</strong></code>
+                    <span>Qual predição se quer fazer</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
                         <br>
-                        <spam>retention</spam> : para previsão de retenção
+                        <Strong>Domínio de dados</Strong>
+                        <br>
+                        <div class="tab-domain">
+                            <span>evasao</span> : para predição de evasão
+                            <br>
+                            <span>retencao</span> : <s>para predição de retenção</s>
+                            (não implementado)
+                        </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <div class="tab">
-                <i class="fa fa-angle-right"></i>
-                <code>method</code>: Metódo da API de Dados requisitado
+                <br>
                 <div class="tab">
-                    <strong>Tipo:</strong>
-                    <span>String</span>
-                    <br>
-                    <Strong>Domínio de dados</Strong>
-                    <br>
-                    <div class="tab-domain">
-                        <span>student</span> : consulta por estudante
+                    <i class="fa fa-angle-right"></i>
+                    <code><strong>method:</strong></code> 
+                    <span>Metódo da API de Dados requisitado</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
                         <br>
-                        <spam>period</spam> : consulta por ano.periodo
+                        <Strong>Domínio de dados</Strong>
                         <br>
-                        <spam>course</spam> : consulta por curso
+                        <div class="tab-domain">
+                            <span>curso</span> : consulta por curso
+                            <br/>
+                            <span>aluno</span> : consulta por aluno
+                        </div>
                     </div>
                 </div>
-            </div>
-        </blockquote>
+                <h4>Repostas</h4>
+                <p>As resposta são retornadas no formato JSON.</p>
+                <h4>Exemplo de URL</h4>
+            </blockquote>
+        </div>
+        <pre class="url">
+            <code>http://epredictapi.herokuapp.com/evasao/curso/es</code>
+        </pre>
+        <hr/>
+        <div>
+            <h3>Métodos da API</h3>
+            <blockquote>
+                <h4>curso</h4>
+                <h5>Descrição</h5>
+                <p>Retorna informações quantitativas e predições de evasão nos cursos.</p>
+                <h5>Resultado</h5>
+                <div class="tab">
+                    <code><strong>percent_evasao_cc</strong></code>: 
+                    <span>Percentual de evasão no curso de Ciências da Computação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>percent_evasao_es</strong></code>: 
+                    <span>Percentual de evasão no curso de Engenharia de Software</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>percent_evasao_si</strong></code>: 
+                    <span>Percentual de evasão no curso de Sistemas da Informação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+
+                    <code><strong>percent_evasao_total</strong></code>: 
+                    <span>Percentual de evasão em todos os cursos</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_aluno_cc</strong></code>: 
+                    <span>Quantidade de alunos no curso de Ciências da Computação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_aluno_es</strong></code>: 
+                    <span>Quantidade de alunos no curso de Engenharia de Software</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_aluno_si</strong></code>: 
+                    <span>Quantidade de alunos no curso de Sistemas de Informação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_aluno_total</strong></code>: 
+                    <span>Quantidade total de alunos</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_evasao_cc</strong></code>: 
+                    <span>Quantidade de predições de evasão 
+                        no curso de Ciências da Computação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_evasao_es</strong></code>: 
+                    <span>Quantidade de predições de evasao 
+                        no curso de Engenharia de Software</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_evasao_si</strong></code>: 
+                    <span>Quantidade de predições de evasão 
+                        no curso de Sistemas de Informação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>quant_evasao_total</strong></code>: 
+                    <span>Quantidade total de predições de evasão</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    
+                </div>
+                <h4>Exemplo de chamada</h4>
+            </blockquote>
+            <pre class="url">
+            <code>http://epredictapi.herokuapp.com/evasao/</code>
+            </pre>
+            <blockquote>
+                <h4>Exemplo de retorno</h4>
+            </blockquote>
+            <pre class="url">
+            <code>
+            {
+                <span class="key">'percent_evasao_cc'</span>:       <span class="value">68</span>,
+                <span class="key">'percent_evasao_es'</span>:       <span class="value">18</span>,
+                <span class="key">'percent_evasao_si'</span>:       <span class="value">14</span>,
+                <span class="key">'percent_evasao_total'</span>:    <span class="value">21</span>,
+                <span class="key">'quant_aluno_cc'</span>:          <span class="value">432</span>,
+                <span class="key">'quant_aluno_es'</span>:          <span class="value">207</span>,
+                <span class="key">'quant_aluno_si'</span>:          <span class="value">440</span>,
+                <span class="key">'quant_aluno_total'</span>:       <span class="value">1079</span>,
+                <span class="key">'quant_evasao_cc'</span>:         <span class="value">156</span>,
+                <span class="key">'quant_evasao_es'</span>:         <span class="value">42</span>,
+                <span class="key">'quant_evasao_si'</span>:         <span class="value">31</span>,
+                <span class="key">'quant_evasao_total'</span>:      <span class="value">229</span>
+            }     
+            </code>
+            </pre>
+        </div>
     </div>
 </body>
 </html>

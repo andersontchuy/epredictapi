@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Ubuntu:wght@300&display=swap');
+
+.container {
+    margin: 0 10%;
+}
+
+.header {
+	display: flex;
+	height: 120px;
+	justify-content: center;
+	align-items: center;
+	background: #C2C2C2;
+	border-bottom: 4px solid #A2A2A2;
+	background-size: cover;
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+	padding-bottom: 5px; 
+}
+
+.link-wrapper {
+    flex-direction: row;
+}
+
+.link-wrapper a {
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.member-wrapper {
+	flex-direction: column;
+	align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+}
+
+blockquote code {
+    color: #C7254E;
+    background-color: #F9F2F4;
+    padding: 0.4%;
+}
+
+.tab {
+    background-color: #F2F2F2;
+    padding: 1%;
+}
+
+.tab-domain span {
+    color: #31708F;
+    background-color: #D9EDF7;
+}
+
+.url {
+    margin: 0% 3.5%;
+    padding-top: 15px;
+    border-radius: 10px 10px;
+    color: #FFF;
+    background-color: #333333;
+}
+
+.url code {
+    margin-left: -70px;;
+}
+
+.key {
+    color: #ff9266;
+}
+
+.value {
+    color: #CD5A58;
+}
+
+ul {
+    list-style-type: none;
+    line-height: 30px;
+}
+
+p {
+    line-height: 20px;
+}
+
+a {
+    margin-bottom: 8px;
+    text-decoration: none;
+}
+
+h2, h3, h4, h5 {
+    font-family: 'Righteous', cursive;
+}
+
+h2 {
+    color: #fff;
+    font-size: 3em;
+}
+
+h5 {
+    color: #888888;
+}
+
+li, p, a, span, strong {
+    font-family: 'Ubuntu', sans-serif;
+}
