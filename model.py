@@ -1,8 +1,10 @@
 #coding: utf-8
 import pickle
+import json
 from normalize import normalizaDados
 
 evasion = pickle.load(open('./modelo/evasao_modelo_v3.0.sav','rb'))
+lista = json.load(open('./data/alunos_ativos.json'))
 
 def preveEvasao(aluno):
    result = evasion.predict(aluno.reshape(1, -1))
@@ -10,7 +12,8 @@ def preveEvasao(aluno):
 
 def calculaProbabilidade(aluno):
    prob = evasion.predict_proba(aluno.reshape(1, -1))
-   return prob
+   result  = int(round(prob[0][1]*100, 0))
+   return result
 
 def listaAlunoPredito(lista):
    lista_aluno = {}
@@ -104,4 +107,42 @@ def mostraPredicaoPorCurso(lista, id_curso):
       'lista_aluno': dado_aluno
    }
    
+   return result
+
+def mostraPredicaoAluno(matricula):
+   aluno = []
+   [aluno.append(dado) for dado in lista if dado['matricula'] == matricula]
+   
+   if len(aluno) == 0:
+      return 0     
+
+   ndado = normalizaDados(aluno)
+   predicao = preveEvasao(ndado)
+   prob = calculaProbabilidade(ndado)
+
+   result = {
+      'status': predicao[0],
+      'probabilidade_evasao': str(prob),
+      'curso': aluno[0]['curso'],
+      'grau_academico': aluno[0]['grau_academico'],
+      'modalidade': aluno[0]['modalidade'],
+      'turno': aluno[0]['turno'],
+      'forma_ingresso': aluno[0]['forma_ingresso'],
+      'especificidade_ingresso': aluno[0]['especificidade_ingresso'],
+      'categoria_ingresso': aluno[0]['categoria_ingresso'],
+      'ano_ingresso': str(aluno[0]['ano_ingresso']),
+      'semestre_ingresso': str(aluno[0]['semestre_ingresso']),
+      'sexo': aluno[0]['sexo'],
+      'cor_raca': aluno[0]['cor_raca'],
+      'deficiencia': aluno[0]['deficiencia'],
+      'media_global_aluno': str(aluno[0]['media_global_aluno']),
+      'media_global_curso': str(aluno[0]['media_global_curso']),
+      'percentual_integralizado': str(aluno[0]['percentual_integralizado']),
+      'escola_publica': aluno[0]['escola_publica'],
+      'escola_ensino_medio': aluno[0]['escola_ensino_medio'],
+      'cidade_endereco': aluno[0]['cidade_endereco'],
+      'uf_endereco': aluno[0]['uf_endereco'],
+      'total_trancamentos': str(aluno[0]['total_trancamentos'])
+   }
+
    return result

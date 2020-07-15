@@ -1,8 +1,7 @@
 #! /usr/bin/env python
-import json, random, os
+import json, os
 from flask import Flask, jsonify, render_template, request
-from model import mostraPredicaoGeral
-from model import mostraPredicaoPorCurso
+from model import mostraPredicaoGeral, mostraPredicaoPorCurso, mostraPredicaoAluno
 
 app = Flask(__name__)
 
@@ -24,35 +23,6 @@ def prever_evasao():
     result = mostraPredicaoGeral(dados)
     return jsonify(result), 200
 
-# rota predição de evasão por aluno
-@app.route('/evasao/aluno/<int:matricula>', methods=['GET'])
-def prever_evasao_aluno(matricula):
-    for dado in dados:
-        if dado['matricula'] == matricula:
-            return jsonify({
-                'curso': dado['curso'],
-                'turno': dado['turno'],
-                'forma_ingresso': dado['forma_ingresso'],
-                'especificidade_ingresso': dado['especificidade_ingresso'],
-                'categoria_ingresso': dado['categoria_ingresso'],
-                'ano_ingresso': str(dado['ano_ingresso']),
-                'semestre_ingresso': str(dado['semestre_ingresso']),
-                'sexo': dado['sexo'],
-                'cor_raca': dado['cor_raca'],
-                'deficiencia': dado['deficiencia'],
-                'dt_nascimento': dado['dt_nascimento'],
-                'score': str(round(random.random(), 4)), 
-                'media_global_curso': str(dado['media_global_curso']),
-                'media_global_aluno': str(dado['media_global_aluno']),
-                'percentual_integralizado': str(dado['percentual_integralizado']),
-                'escola_publica': dado['escola_publica'],
-                'cidade_endereco': dado['cidade_endereco'],
-                'uf_endereco': dado['uf_endereco'],
-                'total_trancamentos': str(dado['total_trancamentos']),
-                'possui_tracamento_compulsorio': dado['possui_tracamento_compulsorio']
-            }), 200
-    return jsonify({'error': 'not found'}), 404
-
 # rota predição de evasão por curso
 @app.route('/evasao/curso/<string:curso>', methods=['GET'])
 def prever_evasao_por_curso(curso):
@@ -61,10 +31,17 @@ def prever_evasao_por_curso(curso):
         return jsonify({'error': 'not found'}), 404
     return jsonify(result), 200
 
-
-# if __name__ == "__main__":
-#     app.run(host='127.0.0.1', port=5000, debug=True)
+# rota predição de evasão por aluno
+@app.route('/evasao/aluno/<int:matricula>', methods=['GET'])
+def prever_evasao_aluno(matricula):
+    result = mostraPredicaoAluno(matricula)
+    if result == 0:
+        return jsonify({'error': 'not found'}), 404
+    return jsonify(result), 200
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='127.0.0.1', port=5000, debug=True)
+
+# if __name__ == "__main__":
+#     port = int(os.environ.get("PORT", 5000))
+#     app.run(host='0.0.0.0', port=port)
