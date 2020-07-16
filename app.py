@@ -1,12 +1,9 @@
-#! /usr/bin/env python
-import json, os
+#coding: utf-8
+import os
 from flask import Flask, jsonify, render_template, request
 from model import mostraPredicaoGeral, mostraPredicaoPorCurso, mostraPredicaoAluno
 
 app = Flask(__name__)
-
-# dados atualizados em: 07.07.2020
-dados = json.load(open('./data/alunos_ativos.json'))
 
 @app.route('/', methods=['GET'])
 def home():
@@ -20,13 +17,13 @@ def show_doc():
 # rota predição de evasão todos os cursos
 @app.route('/evasao/', methods=['GET'])
 def prever_evasao():
-    result = mostraPredicaoGeral(dados)
+    result = mostraPredicaoGeral()
     return jsonify(result), 200
 
 # rota predição de evasão por curso
 @app.route('/evasao/curso/<string:curso>', methods=['GET'])
 def prever_evasao_por_curso(curso):
-    result = mostraPredicaoPorCurso(dados, curso)
+    result = mostraPredicaoPorCurso(curso)
     if result == 0:
         return jsonify({'error': 'not found'}), 404
     return jsonify(result), 200

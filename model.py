@@ -24,9 +24,8 @@ def listaAlunoPredito(lista):
    return lista_aluno
 
 def listaAlunoPorCurso(lista, curso):
-    lista_aluno = []
-    [lista_aluno.append(dado) for dado in lista if dado['curso'] == curso]
-    return lista_aluno
+   lista_aluno = [dado for dado in lista if dado['curso'] == curso]
+   return lista_aluno
 
 def separaAlunoPorCurso(lista):
    cc, es, si = [], [], []
@@ -36,38 +35,55 @@ def separaAlunoPorCurso(lista):
       evasao(curso[0])
    return cc, es, si
 
-def mostraPredicaoGeral(lista):
+def mostraPredicaoGeral():
    nlista = normalizaDados(lista)
    alunos = listaAlunoPredito(nlista)
-   cc, es, si = separaAlunoPorCurso(nlista) # todos os alunos
+   
+   # separa todos os alunos por curso
+   cc, es, si = '', '', ''
+   cc, es, si = separaAlunoPorCurso(nlista) 
    qcc = len(cc)
    qes = len(es)
    qsi = len(si)
-   cc, es, si = [], [], []
-   cc, es, si = separaAlunoPorCurso(list(alunos.values())) # alunos preditos
+
+   # separa alunos preditos por curso
+   cc, es, si = '', '', ''
+   cc, es, si = separaAlunoPorCurso(list(alunos.values())) 
    qecc = len(cc)
    qees = len(es)
    qesi = len(si)
-   qat = len(lista)
+   qat = len(nlista)
    qet = len(alunos)
 
    result = {
-      'quant_aluno_cc': str(qcc),
-      'quant_aluno_es': str(qes),
-      'quant_aluno_si': str(qsi),
+      'curso_percent': [
+         {
+            'curso': "Ciências da Computação",
+            'quant_aluno': str(qcc),
+            'percent_evasao': str(int(round((qecc/qet) * 100, 0))),
+            'quant_evasao': str(qecc)
+         },
+         {
+            'curso': "Engenharia de Software",
+            'quant_aluno': str(qes),
+            'percent_evasao': str(int(round((qees/qet) * 100, 0))),
+            'quant_evasao': str(qees)
+         },
+         {
+            'curso': "Sistemas de Informação",
+            'quant_aluno': str(qsi),
+            'percent_evasao': str(int(round((qesi/qet) * 100, 0))),
+            'quant_evasao': str(qesi), 
+         }
+      ],
       'quant_aluno_total': str(qat),
-      'quant_evasao_cc': str(qecc),
-      'quant_evasao_es': str(qees),
-      'quant_evasao_si': str(qesi), 
       'quant_evasao_total': str(qet), 
-      'percent_evasao_cc': str(int(round((qecc/qet) * 100, 0))),
-      'percent_evasao_es': str(int(round((qees/qet) * 100, 0))),
-      'percent_evasao_si': str(int(round((qesi/qet) * 100, 0))),
-      'percent_evasao_total': str(int(round((qet/qat)*100, 0)))
-      }
+   }  
+
    return result
 
-def mostraPredicaoPorCurso(lista, id_curso):
+def mostraPredicaoPorCurso(id_curso):
+   curso = ''
    if id_curso == 'a' or id_curso == 'cc':
       curso = 'CIÊNCIA DA COMPUTAÇÃO'
    elif id_curso == 'b' or id_curso == 'es':
@@ -77,14 +93,14 @@ def mostraPredicaoPorCurso(lista, id_curso):
    else:
       return 0
 
-   nlista = normalizaDados(lista)
-   lista_predicao = listaAlunoPredito(nlista)
-   lista_aluno_predito = []
-   [lista_aluno_predito.append(lista[key]) for key in lista_predicao.keys()]  
+   lista_aluno = listaAlunoPorCurso(lista, curso)
+   nlista = normalizaDados(lista_aluno)
+   lista_predicao = listaAlunoPredito(nlista) 
+   lista_aluno_predito = [lista_aluno[key] for key in lista_predicao.keys()]
    lista_aluno_predito_curso = listaAlunoPorCurso(lista_aluno_predito, curso)
 
-   total_aluno_curso = len(listaAlunoPorCurso(lista, curso))
-   total_evasao = len(lista_aluno_predito_curso)
+   total_aluno_curso = len(lista_aluno)
+   total_evasao = len(lista_aluno_predito)
    percentual = int(round((total_evasao/total_aluno_curso) * 100, 0))
 
    dado_aluno = []
@@ -110,8 +126,8 @@ def mostraPredicaoPorCurso(lista, id_curso):
    return result
 
 def mostraPredicaoAluno(matricula):
-   aluno = []
-   [aluno.append(dado) for dado in lista if dado['matricula'] == matricula]
+   aluno = ''
+   aluno = [dado for dado in lista if dado['matricula'] == matricula]
    
    if len(aluno) == 0:
       return 0     

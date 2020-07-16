@@ -4,6 +4,7 @@ import json
 
 def normalizaDados(dado):
     df = pd.read_json(json.dumps(dado), orient='list')
+    
     # Removendo colunas com informações sem relevância para predição
     df.drop(
         [
