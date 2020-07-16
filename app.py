@@ -1,9 +1,11 @@
 #coding: utf-8
 import os
 from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
 from model import mostraPredicaoGeral, mostraPredicaoPorCurso, mostraPredicaoAluno
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def home():
