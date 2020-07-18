@@ -77,7 +77,8 @@ def mostraPredicaoGeral():
          }
       ],
       'quant_aluno_total': str(qat),
-      'quant_evasao_total': str(qet), 
+      'quant_evasao_total': str(qet),
+      'percent_evasao_total': str(int(round((qet/qat) * 100, 0))) 
    }  
 
    return result
@@ -150,6 +151,7 @@ def mostraPredicaoAluno(matricula):
       'semestre_ingresso': str(aluno[0]['semestre_ingresso']),
       'sexo': aluno[0]['sexo'],
       'cor_raca': aluno[0]['cor_raca'],
+      'idade_ingresso': str(int(ndado[0][6])),
       'deficiencia': aluno[0]['deficiencia'],
       'media_global_aluno': str(aluno[0]['media_global_aluno']),
       'media_global_curso': str(aluno[0]['media_global_curso']),
