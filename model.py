@@ -58,26 +58,26 @@ def mostraPredicaoGeral():
       'curso_percent': [
          {
             'curso': "Ciências da Computação",
-            'quant_aluno': str(qcc),
-            'percent_evasao': str(int(round((qecc/qet) * 100, 0))),
-            'quant_evasao': str(qecc)
+            'quant_aluno': qcc,
+            'percent_evasao': int(round((qecc/qet) * 100, 0)),
+            'quant_evasao': qecc
          },
          {
             'curso': "Engenharia de Software",
-            'quant_aluno': str(qes),
-            'percent_evasao': str(int(round((qees/qet) * 100, 0))),
-            'quant_evasao': str(qees)
+            'quant_aluno': qes,
+            'percent_evasao': int(round((qees/qet) * 100, 0)),
+            'quant_evasao': qees
          },
          {
             'curso': "Sistemas de Informação",
-            'quant_aluno': str(qsi),
-            'percent_evasao': str(int(round((qesi/qet) * 100, 0))),
-            'quant_evasao': str(qesi), 
+            'quant_aluno': qsi,
+            'percent_evasao': int(round((qesi/qet) * 100, 0)),
+            'quant_evasao': qesi, 
          }
       ],
-      'quant_aluno_total': str(qat),
-      'quant_evasao_total': str(qet),
-      'percent_evasao_total': str(int(round((qet/qat) * 100, 0))) 
+      'quant_aluno_total': qat,
+      'quant_evasao_total': qet,
+      'percent_evasao_total': int(round((qet/qat) * 100, 0)) 
    }  
 
    return result
@@ -109,17 +109,17 @@ def mostraPredicaoPorCurso(id_curso):
    for dado in lista_aluno_predito:
       dado_aluno.append({
          'matricula': str(dado['matricula']),
-         'probabilidade_evasao': str(dado['probabilidade_evasao']),
+         'probabilidade_evasao': dado['probabilidade_evasao'],
          'turno': dado['turno'],
          'forma_ingresso': dado['forma_ingresso'],
-         'ano_ingresso': str(dado['ano_ingresso']),
+         'ano_ingresso': dado['ano_ingresso'],
          'sexo': dado['sexo'],
          'cor_raca': dado['cor_raca'],
-         'percentual_integralizado': str(dado['percentual_integralizado']),
+         'percentual_integralizado': dado['percentual_integralizado'],
          'escola_publica': dado['escola_publica'],
          'cidade_endereco': dado['cidade_endereco'],
-         'media_global_aluno': str(dado['media_global_aluno']),
-         'media_global_curso': str(dado['media_global_curso'])
+         'media_global_aluno': dado['media_global_aluno'],
+         'media_global_curso': dado['media_global_curso']
       })
 
    result = {
@@ -144,7 +144,7 @@ def mostraPredicaoAluno(matricula):
 
    result = {
       'status': predicao[0],
-      'probabilidade_evasao': str(prob),
+      'probabilidade_evasao': prob,
       'curso': aluno[0]['curso'],
       'grau_academico': aluno[0]['grau_academico'],
       'modalidade': aluno[0]['modalidade'],
@@ -152,20 +152,20 @@ def mostraPredicaoAluno(matricula):
       'forma_ingresso': aluno[0]['forma_ingresso'],
       'especificidade_ingresso': aluno[0]['especificidade_ingresso'],
       'categoria_ingresso': aluno[0]['categoria_ingresso'],
-      'ano_ingresso': str(aluno[0]['ano_ingresso']),
-      'semestre_ingresso': str(aluno[0]['semestre_ingresso']),
+      'ano_ingresso': aluno[0]['ano_ingresso'],
+      'semestre_ingresso': aluno[0]['semestre_ingresso'],
       'sexo': aluno[0]['sexo'],
       'cor_raca': aluno[0]['cor_raca'],
-      'idade_ingresso': str(int(ndado[0][6])),
+      'idade_ingresso': int(ndado[0][6]),
       'deficiencia': aluno[0]['deficiencia'],
-      'media_global_aluno': str(aluno[0]['media_global_aluno']),
-      'media_global_curso': str(aluno[0]['media_global_curso']),
-      'percentual_integralizado': str(aluno[0]['percentual_integralizado']),
+      'media_global_aluno': aluno[0]['media_global_aluno'],
+      'media_global_curso': aluno[0]['media_global_curso'],
+      'percentual_integralizado': aluno[0]['percentual_integralizado'],
       'escola_publica': aluno[0]['escola_publica'],
       'escola_ensino_medio': aluno[0]['escola_ensino_medio'],
       'cidade_endereco': aluno[0]['cidade_endereco'],
       'uf_endereco': aluno[0]['uf_endereco'],
-      'total_trancamentos': str(aluno[0]['total_trancamentos'])
+      'total_trancamentos': aluno[0]['total_trancamentos']
    }
 
    return result
