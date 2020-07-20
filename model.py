@@ -123,9 +123,9 @@ def mostraPredicaoPorCurso(id_curso):
       })
 
    result = {
-      'total_aluno': str(total_aluno_curso),
-      'total_evasao': str(total_evasao),
-      'percentual_evasao': str(percentual),
+      'total_aluno': total_aluno_curso,
+      'total_evasao': total_evasao,
+      'percentual_evasao': percentual,
       'lista_aluno': dado_aluno
    }
    
