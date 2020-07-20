@@ -116,7 +116,10 @@ def mostraPredicaoPorCurso(id_curso):
          'sexo': dado['sexo'],
          'cor_raca': dado['cor_raca'],
          'percentual_integralizado': str(dado['percentual_integralizado']),
-         'escola_publica': dado['escola_publica']
+         'escola_publica': dado['escola_publica'],
+         'cidade_endereco': dado['cidade_endereco'],
+         'media_global_aluno': str(dado['media_global_aluno']),
+         'media_global_curso': str(dado['media_global_curso'])
       })
 
    result = {
