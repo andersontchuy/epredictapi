@@ -12,7 +12,7 @@ def preveEvasao(aluno):
 
 def calculaProbabilidade(aluno):
    prob = evasion.predict_proba(aluno.reshape(1, -1))
-   result  = int(round(prob[0][1]*100, 0))
+   result  = round(prob[0][1]*100, 2)
    return result
 
 def listaAlunoPredito(lista):
@@ -20,40 +20,39 @@ def listaAlunoPredito(lista):
    for aluno in range(len(lista)):
       predicao = preveEvasao(lista[aluno])
       if predicao == 'sim':
-         lista_aluno[aluno] = lista[aluno]
+         lista_aluno[aluno] = calculaProbabilidade(lista[aluno])
    return lista_aluno
 
 def listaAlunoPorCurso(lista, curso):
    lista_aluno = [dado for dado in lista if dado['curso'] == curso]
    return lista_aluno
 
-def separaAlunoPorCurso(lista):
-   cc, es, si = [], [], []
-   evasao = lambda x: cc.append(lista[0]) if x == 1 else (
-      es.append(lista[0]) if x == 2 else si.append(lista[0]))
-   for curso in lista:
-      evasao(curso[0])
-   return cc, es, si
-
 def mostraPredicaoGeral():
-   nlista = normalizaDados(lista)
-   alunos = listaAlunoPredito(nlista)
-   
-   # separa todos os alunos por curso
    cc, es, si = '', '', ''
-   cc, es, si = separaAlunoPorCurso(nlista) 
-   qcc = len(cc)
-   qes = len(es)
-   qsi = len(si)
+   cc = listaAlunoPorCurso(lista, 'CIÊNCIA DA COMPUTAÇÃO')
+   es = listaAlunoPorCurso(lista, 'ENGENHARIA DE SOFTWARE')
+   si = listaAlunoPorCurso(lista, 'SISTEMAS DE INFORMAÇÃO' )
 
-   # separa alunos preditos por curso
-   cc, es, si = '', '', ''
-   cc, es, si = separaAlunoPorCurso(list(alunos.values())) 
-   qecc = len(cc)
-   qees = len(es)
-   qesi = len(si)
-   qat = len(nlista)
-   qet = len(alunos)
+   ncc = normalizaDados(cc)
+   nes = normalizaDados(es)
+   nsi = normalizaDados(si)
+
+   # quantidade de alunos por curso
+   qcc = len(ncc)
+   qes = len(nes)
+   qsi = len(nsi)
+
+   pcc = listaAlunoPredito(ncc)
+   pes = listaAlunoPredito(nes)
+   psi = listaAlunoPredito(nsi)
+
+   # quantidade de alunos com predição de evasão por curso
+   qecc = len(pcc)
+   qees = len(pes)
+   qesi = len(psi)
+   
+   qat = qcc + qes + qsi      # total de alunos
+   qet = qecc + qees + qesi   # total de predição de evasão
 
    result = {
       'curso_percent': [
@@ -97,17 +96,20 @@ def mostraPredicaoPorCurso(id_curso):
    lista_aluno = listaAlunoPorCurso(lista, curso)
    nlista = normalizaDados(lista_aluno)
    lista_predicao = listaAlunoPredito(nlista) 
-   lista_aluno_predito = [lista_aluno[key] for key in lista_predicao.keys()]
-   lista_aluno_predito_curso = listaAlunoPorCurso(lista_aluno_predito, curso)
+   lista_aluno_predito = []
+   for key, value in lista_predicao.items():
+      lista_aluno[key]['probabilidade_evasao'] = value
+      lista_aluno_predito.append(lista_aluno[key])
 
    total_aluno_curso = len(lista_aluno)
    total_evasao = len(lista_aluno_predito)
    percentual = int(round((total_evasao/total_aluno_curso) * 100, 0))
 
    dado_aluno = []
-   for dado in lista_aluno_predito_curso:
+   for dado in lista_aluno_predito:
       dado_aluno.append({
          'matricula': str(dado['matricula']),
+         'probabilidade_evasao': str(dado['probabilidade_evasao']),
          'turno': dado['turno'],
          'forma_ingresso': dado['forma_ingresso'],
          'ano_ingresso': str(dado['ano_ingresso']),
