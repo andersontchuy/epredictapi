@@ -1,10 +1,11 @@
 #coding: utf-8
 import pickle
 import json
-from normalize import normalizaDados
+from normalize import normalizaDados, normalizaNomeEscola, df_ideb
 
 evasion = pickle.load(open('./modelo/evasao_modelo_v3.0.sav','rb'))
 lista = json.load(open('./data/alunos_ativos.json'))
+base_ideb = df_ideb[['uf', 'municipio_nome', 'escola_nome', "ideb"]].values.tolist()
 
 def preveEvasao(aluno):
    result = evasion.predict(aluno.reshape(1, -1))
@@ -26,6 +27,24 @@ def listaAlunoPredito(lista):
 def listaAlunoPorCurso(lista, curso):
    lista_aluno = [dado for dado in lista if dado['curso'] == curso]
    return lista_aluno
+
+def buscaIdeb(uf, cidade, escola):
+    ideb = ''
+    uf = uf.upper()
+    cidade = cidade.upper()
+    escola = normalizaNomeEscola(escola)
+    for e in base_ideb:
+        if uf == e[0].upper() and cidade == e[1].upper() and  escola == e[2].upper():
+            ideb = e[3]
+
+    if ideb == '':
+        result =  'Sem cadastro no Censo da Educação Básica 2017'
+    elif ideb == '-':
+       result = 'Escola sem Ideb' 
+    else:
+      result = float(ideb.replace(',', '.'))
+
+    return result
 
 def mostraPredicaoGeral():
    cc, es, si = '', '', ''
@@ -141,6 +160,8 @@ def mostraPredicaoAluno(matricula):
    ndado = normalizaDados(aluno)
    predicao = preveEvasao(ndado)
    prob = calculaProbabilidade(ndado)
+   ideb = buscaIdeb(aluno[0]['uf_ensino_medio'], aluno[0]['cidade_ensino_medio'], 
+   aluno[0]['escola_ensino_medio'],)
 
    result = {
       'status': predicao[0],
@@ -162,10 +183,12 @@ def mostraPredicaoAluno(matricula):
       'media_global_curso': aluno[0]['media_global_curso'],
       'percentual_integralizado': aluno[0]['percentual_integralizado'],
       'escola_publica': aluno[0]['escola_publica'],
-      'escola_ensino_medio': aluno[0]['escola_ensino_medio'],
+      'escola_ensino_medio': aluno[0]['escola_ensino_medio'].upper(),
       'cidade_endereco': aluno[0]['cidade_endereco'],
       'uf_endereco': aluno[0]['uf_endereco'],
-      'total_trancamentos': aluno[0]['total_trancamentos']
+      'total_trancamentos': aluno[0]['total_trancamentos'],
+      'ideb_escola_ensino_medio': ideb
    }
 
    return result
+
