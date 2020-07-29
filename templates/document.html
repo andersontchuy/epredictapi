@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +7,29 @@
     <link href="../static/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+    <header class="header">
+        <a href="/"><h2>ePredict API</h2></a>
+    </header>
     <div class="container">
-        <div class="header">
-            <a href="/"><h2>ePredict API</h2></a>
-        </div>
         <div>
             <br/>
             <em>API de Dados</em>
             <p>
-                Essa página descreve a API de Dados, uma forma automatizada de obter acesso
-                aos modelos preditivos de evasão de alunos de graduação, de forma geral seu uso
+                Essa página descreve a <a href="#api">API</a> de Dados, uma forma automatizada de obter acesso
+                a modelos preditivos de evasão de alunos nos cursos de graduação, de forma geral seu uso
                 possibilita integrar essas informações a outros sistemas. Por esse motivo, 
-                os métodos têm CORS configurado de maneira a permitir chamadas de outros domínios. 
+                os métodos têm <a href="#cors">CORS</a> configurado de maneira a permitir chamadas de outros domínios. 
                 A documentação abaixo descreve, com exemplos, como utilizar a interface de dados.
             </p>
         </div>
         <hr>
-        <div>
-            <h3>Acesso API de evasão</h3>
+        <!-- <div>
+            <h3>Acesso API de predição</h3>
             <p> O acesso a API de dados é público, não é necessario criar uma conta 
                 tampuco autenticar.
             </p>
         </div>
-        <hr>
+        <hr> -->
         <div>
             <h3>Estrutura das Requisições</h3>
             <blockquote>
@@ -42,18 +42,20 @@
                         <code>predict</code>
                         /
                         <code>method</code>
+                        /
+                        <code>argument</code>
                     </strong></span>
                 </p>
                 <h4>Parâmetros de URL</h4>
-                <p>Exsitem dois parâmetros presentes nas requisições:</p>
+                <p>Exsitem três parâmetros presentes nas requisições:</p>
                 <div class="tab">
                     <i class="fa fa-angle-right"></i>
-                    <code><strong>predict:</strong></code>
-                    <span>Qual predição se quer fazer</span>
+                    <code><strong>predict</strong></code>
+                    <span> - Predição que se quer fazer</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>String</span>
-                        <br>
+                        <br><br>
                         <Strong>Domínio de dados</Strong>
                         <br>
                         <div class="tab-domain">
@@ -67,12 +69,12 @@
                 <br>
                 <div class="tab">
                     <i class="fa fa-angle-right"></i>
-                    <code><strong>method:</strong></code> 
-                    <span>Metódo da API de Dados requisitado</span>
+                    <code><strong>method</strong></code>
+                    <span> - Metódo que será requisitado</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>String</span>
-                        <br>
+                        <br><br>
                         <Strong>Domínio de dados</Strong>
                         <br>
                         <div class="tab-domain">
@@ -82,128 +84,547 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <div class="tab">
+                    <i class="fa fa-angle-right"></i>
+                    <code><strong>argument</strong></code>
+                    <span> - Dados passados como argumento da requisição</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                        <br><br>
+                        <Strong>Domínio de dados</Strong>
+                        <br>
+                        <div class="tab-domain">
+                            <span>sigla</span> : para consulta por curso
+                            <br>
+                            <div class="tab">
+                                <code>Lista de siglas</code>
+                                <div class="tab-domain">
+                                    <span>cc</span> : <em>Ciências da Computação</em>
+                                    <br>
+                                    <span>es</span> : <em>Engenharia de Software</em>
+                                    <br>
+                                    <span>si</span> : <em>Sistemas de informação</em>
+                                </div>
+                            </div>
+                            <span>matrícula</span> : para consulta por aluno
+                            <br><br>
+                            <em>Número da matrícula do aluno</em>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <h4>Repostas</h4>
-                <p>As resposta são retornadas no formato JSON.</p>
-                <h4>Exemplo de URL</h4>
+                <p>Todas as resposta são retornadas no formato <a href="#json">JSON</a>.</p>
             </blockquote>
         </div>
-        <pre class="url">
-            <code>http://epredictapi.herokuapp.com/evasao/curso/es</code>
-        </pre>
         <hr/>
         <div>
-            <h3>Métodos da API</h3>
+            <h3>Predições da API</h3>
             <blockquote>
-                <h4>curso</h4>
-                <h5>Descrição</h5>
-                <p>Retorna informações quantitativas e predições de evasão nos cursos.</p>
-                <h5>Resultado</h5>
+                <h4>Predição de Evasão</h4>
+                <h5>Predição Geral</h5>
+                <p>Retorna dados estatísticos de predições 
+                    de evasão num panorama geral em todos os curso analisados.</p>
+                <h5>Itens Retornados</h5>
                 <div class="tab">
-                    <code><strong>percent_evasao_cc</strong></code>: 
-                    <span>Percentual de evasão no curso de Ciências da Computação</span>
+                    <code><strong>curso_percent</strong></code> 
+                    <span> - Lista com dados de todos os cursos</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
-                        <span>Decimal</span>
+                        <span>Lista</span>
                     </div>
-                    <code><strong>percent_evasao_es</strong></code>: 
-                    <span>Percentual de evasão no curso de Engenharia de Software</span>
+                    <code><strong>curso</strong></code>
+                    <span> - Nome do curso</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
-                        <span>Decimal</span>
+                        <span>String</span>
                     </div>
-                    <code><strong>percent_evasao_si</strong></code>: 
-                    <span>Percentual de evasão no curso de Sistemas da Informação</span>
+                    <code><strong>percent_evasao</strong></code> 
+                    <span> - Percentual de alunos com predição de evasão em relação a quantidade total de evasão</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>Decimal</span>
                     </div>
 
-                    <code><strong>percent_evasao_total</strong></code>: 
-                    <span>Percentual de evasão em todos os cursos</span>
+                    <code><strong>quant_aluno</strong></code>
+                    <span> - Quantidade de alunos no curso</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>Decimal</span>
                     </div>
-                    <code><strong>quant_aluno_cc</strong></code>: 
-                    <span>Quantidade de alunos no curso de Ciências da Computação</span>
+                    <code><strong>quant_evasao</strong></code> 
+                    <span> - Quantidade de alunos com predição de evasão no curso</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>Decimal</span>
                     </div>
-                    <code><strong>quant_aluno_es</strong></code>: 
-                    <span>Quantidade de alunos no curso de Engenharia de Software</span>
+                    <code><strong>quant_aluno_total</strong></code> 
+                    <span> - Quantidade total de alunos</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>Decimal</span>
                     </div>
-                    <code><strong>quant_aluno_si</strong></code>: 
-                    <span>Quantidade de alunos no curso de Sistemas de Informação</span>
+                    <code><strong>quant_evasao_total</strong></code>
+                    <span> - Quantidade total de alunos com predição de evasão em todos os cursos</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>Decimal</span>
                     </div>
-                    <code><strong>quant_aluno_total</strong></code>: 
-                    <span>Quantidade total de alunos</span>
+                    <code><strong>percent_evasao_total</strong></code> 
+                    <span> - Percentual de alunos com predição de evasão em relação a quantidade total de alunos</span>
                     <div class="tab">
                         <strong>Tipo:</strong>
                         <span>Decimal</span>
                     </div>
-                    <code><strong>quant_evasao_cc</strong></code>: 
-                    <span>Quantidade de predições de evasão 
-                        no curso de Ciências da Computação</span>
-                    <div class="tab">
-                        <strong>Tipo:</strong>
-                        <span>Decimal</span>
-                    </div>
-                    <code><strong>quant_evasao_es</strong></code>: 
-                    <span>Quantidade de predições de evasao 
-                        no curso de Engenharia de Software</span>
-                    <div class="tab">
-                        <strong>Tipo:</strong>
-                        <span>Decimal</span>
-                    </div>
-                    <code><strong>quant_evasao_si</strong></code>: 
-                    <span>Quantidade de predições de evasão 
-                        no curso de Sistemas de Informação</span>
-                    <div class="tab">
-                        <strong>Tipo:</strong>
-                        <span>Decimal</span>
-                    </div>
-                    <code><strong>quant_evasao_total</strong></code>: 
-                    <span>Quantidade total de predições de evasão</span>
-                    <div class="tab">
-                        <strong>Tipo:</strong>
-                        <span>Decimal</span>
-                    </div>
-                    
                 </div>
                 <h4>Exemplo de chamada</h4>
+                <p>Não é necessário passagem de método 
+                     e nem de argumento para a requisição da predição geral de evasão.</p>
             </blockquote>
             <pre class="url">
-            <code>http://epredictapi.herokuapp.com/evasao/</code>
+                <code>http://epredictapi.herokuapp.com/evasao/</code>
             </pre>
             <blockquote>
                 <h4>Exemplo de retorno</h4>
+                <p>Estrutura JSON retornada na consulta de predição geral de evasão.</p>
             </blockquote>
             <pre class="url">
             <code>
-            {
-                <span class="key">'percent_evasao_cc'</span>:       <span class="value">68</span>,
-                <span class="key">'percent_evasao_es'</span>:       <span class="value">18</span>,
-                <span class="key">'percent_evasao_si'</span>:       <span class="value">14</span>,
-                <span class="key">'percent_evasao_total'</span>:    <span class="value">21</span>,
-                <span class="key">'quant_aluno_cc'</span>:          <span class="value">432</span>,
-                <span class="key">'quant_aluno_es'</span>:          <span class="value">207</span>,
-                <span class="key">'quant_aluno_si'</span>:          <span class="value">440</span>,
-                <span class="key">'quant_aluno_total'</span>:       <span class="value">1079</span>,
-                <span class="key">'quant_evasao_cc'</span>:         <span class="value">156</span>,
-                <span class="key">'quant_evasao_es'</span>:         <span class="value">42</span>,
-                <span class="key">'quant_evasao_si'</span>:         <span class="value">31</span>,
-                <span class="key">'quant_evasao_total'</span>:      <span class="value">229</span>
-            }     
+              <span class="abre-chave">{</span>
+                <span class="key">"curso_percent"</span>: [
+                    <span class="abre-chave">{</span>
+                        <span class="key">"curso"</span>: <span class="value str">"Ciências da Computação"</span>,
+                        <span class="key">"percent_evasao"</span>: <span class="value num">68</span>,
+                        <span class="key">"quant_aluno"</span>: <span class="value num">432</span>,
+                        <span class="key">"quant_evasao"</span>: <span class="value num">156</span>,
+                    <span class="fecha-chave">},</span>
+                    <span class="abre-chave">{</span>
+                        <span class="key">"curso"</span>: <span class="value str">"Engenharia de Software"</span>,
+                        <span class="key">"percent_evasao"</span>: <span class="value num">18</span>,
+                        <span class="key">"quant_aluno"</span>: <span class="value num">207</span>,
+                        <span class="key">"quant_evasao"</span>: <span class="value num">42</span>,
+                    <span class="fecha-chave">},</span>
+                    <span class="abre-chave">{</span>
+                        <span class="key">"curso"</span>: <span class="value str">"Sistemas de Informação"</span>,
+                        <span class="key">"percent_evasao"</span>: <span class="value num">14</span>,
+                        <span class="key">"quant_aluno"</span>: <span class="value num">440</span>,
+                        <span class="key">"quant_evasao"</span>: <span class="value num">31</span>,
+                    <span class="fecha-chave">},</span>
+                <span class="fecha-colchete">],</span>
+                    <span class="key">"percent_evasao_total"</span>: <span class="value num">21</span>,
+                    <span class="key">"quant_aluno_total"</span>: <span class="value num">1079</span>,
+                    <span class="key">"quant_evasao_total"</span>: <span class="value num">229</span>,
+              <span class="fecha-chave">}</span>
             </code>
             </pre>
+            <blockquote>
+                <h4>Predição de Retenção</h4>
+                <p>As funcionalidades de predição de retenção não foram implementadas neste protótipo.</p>
+            </blockquote>
+            
+            <hr/>
+        </div>
+        <div>
+            <h3>Métodos da API</h3>
+            <blockquote>
+                <h4>curso</h4>
+                <h5>Descrição</h5>
+                <p>Retorna a lista de alunos com predição de evasão
+                    além de informações quantitativas e percentuais 
+                    do curso passado como argumento.</p>
+                <h5>Itens Retornados</h5>
+                <div class="tab">
+                    <code><strong>lista_aluno</strong></code> 
+                    <span> - Lista com dados de todos os alunos com predição 
+                        de evasão no curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Lista</span>
+                    </div>
+                    <code><strong>percentual_evasao</strong></code>
+                    <span> - Número percentual de predição de evasão no curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>total_aluno</strong></code> 
+                    <span> - Total de alunos com matrícula ativa no curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Interio</span>
+                    </div>
+
+                    <code><strong>total_evasao</strong></code>
+                    <span> - Total de alunos com predição de evasão no curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Inteiro</span>
+                    </div>
+                </div>
+                <h5>Itens Retornados na lista de alunos</h5>
+                <div class="tab">
+                    <code><strong>ano_ingresso</strong></code> 
+                    <span> - Ano que o aluno ingressou no curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Inteiro</span>
+                    </div>
+                    <code><strong>cidade_endereco</strong></code>
+                    <span> - Cidade onde reside</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>cor_raca</strong></code> 
+                    <span> - Cor ou raça declarada</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>escola_publica</strong></code>
+                    <span> - Informa se é oriundo de escola pública</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>forma_ingresso</strong></code>
+                    <span> - Informa como o aluno ingressou na graduação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>matricula</strong></code>
+                    <span> - Número da matrícula do aluno</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>media_global_aluno</strong></code>
+                    <span> - Média global do aluno</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>media_global_curso</strong></code>
+                    <span> - Média global do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>percentual_integralizado</strong></code>
+                    <span> - Indica a evolução do aluno ao longo do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>probabilidade_evasao</strong></code>
+                    <span> - Informa a probabilidade do aluno evadir do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>sexo</strong></code>
+                    <span> - Sexo do aluno</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>turno</strong></code>
+                    <span> - Turno na qual o aluno estuda</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                </div>
+                <h4>Exemplo de chamada</h4>
+                <p> Requisição que passa a sigla do curso de Engenharia de Software como argumento.</p>
+            </blockquote>
+            <pre class="url">
+            <code>http://epredictapi.herokuapp.com/evasao/curso/es</code>
+            </pre>
+            <blockquote>
+                <h4>Exemplo de retorno</h4>
+                <p>Estrutura JSON retornada na consulta.</p>
+            </blockquote>
+            <pre class="url">
+            <code>
+              <span class="abre-chave">{</span>
+                <span class="key">"lista_aluno"</span>: <span class="abre-colchete">[</span>
+                    <span class="abre-chave">{</span>
+                        <span class="key">"ano_ingresso"</span>: <span class="value num">2014</span>,
+                        <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
+                        <span class="key">"cor_raca"</span>: <span class="value str">"Pardo"</span>,
+                        <span class="key">"escola_publica"</span>: <span class="value str">"SIM"</span>,
+                        <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                        <span class="key">"matricula"</span>: <span class="value str">"000000000"</span>,
+                        <span class="key">"media_global_aluno"</span>: <span class="value num">1.65</span>,
+                        <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
+                        <span class="key">"percentual_integralizado"</span>: <span class="value num">6.4</span>,
+                        <span class="key">"probabilidade_evasao"</span>: <span class="value num">74.67</span>,
+                        <span class="key">"sexo"</span>: <span class="value str">"MASCULINO"</span>,
+                        <span class="key">"turno"</span>: <span class="value str">"Noturno"</span>
+                    <span class="fecha-chave">},</span>
+                    <span class="abre-chave">{</span>
+                        <span class="key">"ano_ingresso"</span>: <span class="value num">2014</span>,
+                        <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
+                        <span class="key">"cor_raca"</span>: <span class="value str">"Pardo"</span>,
+                        <span class="key">"escola_publica"</span>: <span class="value str">"NÃO"</span>,
+                        <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                        <span class="key">"matricula"</span>: <span class="value str">"111111111"</span>,
+                        <span class="key">"media_global_aluno"</span>: <span class="value num">3.31</span>,
+                        <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
+                        <span class="key">"percentual_integralizado"</span>: <span class="value num">11.73</span>,
+                        <span class="key">"probabilidade_evasao"</span>: <span class="value num">73,34</span>,
+                        <span class="key">"sexo"</span>: <span class="value str">"FEMININO"</span>,
+                        <span class="key">"turno"</span>: <span class="value str">"Noturno"</span>
+                    <span class="fecha-chave">},</span>
+                    <span class="abre-chave">{</span>
+                        <span class="key">"ano_ingresso"</span>: <span class="value num">2013</span>,
+                        <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
+                        <span class="key">"cor_raca"</span>: <span class="value str">"Branco"</span>,
+                        <span class="key">"escola_publica"</span>: <span class="value str">"NÃO"</span>,
+                        <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                        <span class="key">"matricula"</span>: <span class="value str">"222222222"</span>,
+                        <span class="key">"media_global_aluno"</span>: <span class="value num">2.26</span>,
+                        <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
+                        <span class="key">"percentual_integralizado"</span>: <span class="value num">12.8</span>,
+                        <span class="key">"probabilidade_evasao"</span>: <span class="value num">75.55</span>,
+                        <span class="key">"sexo"</span>: <span class="value str">"MASCULINO"</span>,
+                        <span class="key">"turno"</span>: <span class="value str">"Noturno"</span>
+                    <span class="fecha-chave">}</span>
+                <span class="fecha-colchete">],</span>
+                <span class="key">"percentual_evasao": </span> <span class="value num">15</span>,
+                <span class="key">"total_aluno"</span>: <span class="value num">20</span>,
+                <span class="key">"total_evasao"</span>: <span class="value num">3</span>
+              <span class="fecha-chave">}</span>
+            </code>
+            </pre>
+            <blockquote>
+                <h4>aluno</h4>
+                <h5>Descrição</h5>
+                <p>Retorna a predição de evasão do aluno e seus dados pessoais e acadêmicos.</p>
+                <h5>Itens Retornados</h5>
+                <div class="tab">
+                    <code><strong>ano_ingresso</strong></code> 
+                    <span> - Ano que o aluno ingressou no curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Inteiro</span>
+                    </div>
+                    <code><strong>categoria_ingresso</strong></code> 
+                    <span> - Categoria de ingresso do aluno</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>cidade_endereco</strong></code>
+                    <span> - Cidade onde reside</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>cor_raca</strong></code> 
+                    <span> - Cor ou raça declarada</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>curso</strong></code> 
+                    <span> - Nome do curso que está matrículado</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>deficiencia</strong></code> 
+                    <span> - Identifica se o aluno possui alguma deficiência</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>escola_ensino_medio</strong></code> 
+                    <span> - Nome da escola onde concluíu ensino médio</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>escola_publica</strong></code> 
+                    <span> - Informa se é oriundo de escola pública</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>forma_ingresso</strong></code> 
+                    <span> - Informa como o aluno ingressou na graduação</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>grau_academico</strong></code> 
+                    <span> - Grau conferido ao aluno no final do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>idade_ingresso</strong></code> 
+                    <span> - Idade em que ingressou na universidade</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Inteiro</span>
+                    </div>
+                    <code><strong>ideb_escola_ensino_medio</strong></code> 
+                    <span> - Índice ideb da escola na qual o aluno concluíu ensino médio</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>media_global_aluno</strong></code> 
+                    <span> - Média do aluno em relação às suas notas</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>media_global_curso</strong></code> 
+                    <span> - Média do aluno em relação ao curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>modalidade</strong></code> 
+                    <span> - Modalidade de ensino do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>percentual_integralizado</strong></code> 
+                    <span> - Indica a evolução do aluno ao longo do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>probabilidade_evasao</strong></code> 
+                    <span> - Indica a probabilidade do aluno evadir do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Decimal</span>
+                    </div>
+                    <code><strong>semestre_ingresso</strong></code> 
+                    <span> - Semestre na qual o aluno ingressou na universidade</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Inteiro</span>
+                    </div>
+                    <code><strong>sexo</strong></code> 
+                    <span> - Sexo do aluno</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>status</strong></code> 
+                    <span> - Mostra a classificação da predição de evasão</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>total_trancamentos</strong></code> 
+                    <span> - Total de trancamentos feitos pelo aluno</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>Inteiro</span>
+                    </div>
+                    <code><strong>turno</strong></code> 
+                    <span> - Turno de funcionamento do curso</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                    <code><strong>uf_endereco</strong></code> 
+                    <span> - Estado onde reside</span>
+                    <div class="tab">
+                        <strong>Tipo:</strong>
+                        <span>String</span>
+                    </div>
+                </div>
+                <h4>Exemplo de chamada</h4>
+                <p> Requisição que passa matrícula do aluno como argumento.</p>
+            </blockquote>
+            <pre class="url">
+                <code>http://epredictapi.herokuapp.com/evasao/aluno/999999999</code>
+            </pre>
+            <blockquote>
+                <h4>Exemplo de retorno</h4>
+                <p>Estrutura JSON retornada na consulta.</p>
+            </blockquote>
+            <pre class="url">
+            <code>
+                <span class="abre-chave">{</span>
+                    <span class="key">"ano_ingresso"</span>: <span class="value num">2018</span>,
+                    <span class="key">"categoria_ingresso"</span>: <span class="value str">""</span>,
+                    <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
+                    <span class="key">"cor_raca"</span>: <span class="value str">"Pardo"</span>,
+                    <span class="key">"curso"</span>: <span class="value str">"SISTEMAS DE INFORMAÇÃO"</span>,
+                    <span class="key">"deficiencia"</span>: <span class="value str">""</span>,
+                    <span class="key">"escola_ensino_medio"</span>: <span class="value str">"COLÉGIO POSITIVO"</span>,
+                    <span class="key">"escola_publica"</span>: <span class="value str">"SIM"</span>,
+                    <span class="key">"especificidade_ingresso"</span>: <span class="value str">""</span>,
+                    <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                    <span class="key">"grau_academico"</span>: <span class="value str">"BACHARELADO"</span>,
+                    <span class="key">"idade_ingresso"</span>: <span class="value num">"23"</span>,
+                    <span class="key">"ideb_escola_ensino_medio"</span>: <span class="value num">5.3</span>,
+                    <span class="key">"media_global_aluno"</span>: <span class="value num">1.65</span>,
+                    <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
+                    <span class="key">"modalidade"</span>: <span class="value str">"Presencial"</span>,
+                    <span class="key">"percentual_integralizado"</span>: <span class="value num">6.4</span>,
+                    <span class="key">"probabilidade_evasao"</span>: <span class="value num">58.51</span>,
+                    <span class="key">"semestre_ingresso"</span>: <span class="value num">1</span>,
+                    <span class="key">"sexo"</span>: <span class="value str">"MASCULINO"</span>,
+                    <span class="key">"status"</span>: <span class="value str">"sim"</span>,
+                    <span class="key">"total_trancamentos"</span>: <span class="value num">0</span>,
+                    <span class="key">"turno"</span>: <span class="value str">"Noturno"</span>,
+                    <span class="key">"uf_endereco"</span>: <span class="value str">"GO"</span>
+                <span class="fecha-chave">}</span>
+            </code>
+            </pre>    
+        </div>
+        <hr>
+        <div>
+            <h3>Glossário</h3>
+            <blockquote>
+                <div class="tab-domain">
+                    <span id="api"><strong>API</strong></span> - <em>Conjunto de rotinas e padrões para acesso a 
+                        um aplicativo ou plataforma</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="cors"><strong>CORS (Cross-Origin Resource Sharing)</strong></span> - <em>Em termos práticos, 
+                        é um recurso de segurança dos navegadores que impede um domínio de fazer requisições Ajax 
+                        de um outro domínio, a não ser que seja explicitamente pelo domínio de origem 
+                        da informação</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="decimal"><strong>Decimal</strong></span> - <em>Tipo de dado númerico, 
+                        valores numéricos de ponto flutuante</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="dominio_de_dados"><strong>Domínio de dados</strong></span> - <em>Conjunto de valores possíveis para 
+                        um determinado campo</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="inteiro"><strong>Inteiro</strong></span> - <em>Tipo de dado númerico, representa 
+                        um subconjunto finito dos inteiros matemáticos</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="json"><strong>JSON</strong></span> - <em>Formato leve para intercâmbio de dados 
+                        computacionais</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="string"><strong>String</strong></span> - <em>Tipo de dado texto, cadeia de caracteres</em>
+                </div>
+            </blockquote>
         </div>
     </div>
+    <footer class="footer">
+        <a href="/"><h2>ePredict API</h2></a>
+    </footer>
 </body>
 </html>

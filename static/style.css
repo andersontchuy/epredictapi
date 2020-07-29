@@ -1,19 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Ubuntu:wght@300&display=swap');
 
-.container {
-    margin: 0 10%;
+/* Todas as páginas */
+body {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    line-height: 30px;
+}
+
+p {
+    line-height: 20px;
+    text-align: justify;
+}
+
+a {
+    margin-bottom: 8px;
+    text-decoration: none;
+}
+
+h2, h3, h4, h5 {
+    font-family: 'Righteous', cursive;
+}
+
+h2 {
+    color: #fff;
+    font-size: 2.5em;
+}
+
+h5 {
+    color: #888888;
+    font-size: 0.9em;
+}
+
+li, p, a, span, strong {
+    font-family: 'Ubuntu', sans-serif;
 }
 
 .header {
 	display: flex;
-	height: 120px;
-	justify-content: center;
-	align-items: center;
-	background: #C2C2C2;
+    height: 120px;
+    padding-left: 2%;
+	justify-content: left;
+    align-items: center;
+	background: #465B6C;
 	border-bottom: 4px solid #A2A2A2;
 	background-size: cover;
 }
 
+.footer {
+    display: flex;
+    padding-left: 2%;
+    margin-top: 15px;
+    height: 200px;
+    justify-content: center;
+    background: #465B6C;
+    border-top: 4px solid #A2A2A2;
+}
+
+.container {
+    margin: 0 5%;
+}
+
+/* Página Home */
 .wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -37,6 +87,7 @@
     background-color: #f2f2f2;
 }
 
+/* Página Documentação */
 blockquote code {
     color: #C7254E;
     background-color: #F9F2F4;
@@ -45,61 +96,111 @@ blockquote code {
 
 .tab {
     background-color: #F2F2F2;
-    padding: 1%;
+    padding: 2%;
 }
 
 .tab-domain span {
     color: #31708F;
     background-color: #D9EDF7;
+    padding: 0 3px;
+    border-radius: 4px 4px;
+}
+
+.tab-domain hr {
+    border: 1px solid #e2e2e2;
+}
+
+.tab-domain em {
+    font-size: 0.9em;
 }
 
 .url {
-    margin: 0% 3.5%;
+    margin: 0 3.5%;
     padding-top: 15px;
     border-radius: 10px 10px;
     color: #FFF;
     background-color: #333333;
 }
 
+.abre-chave,
+.fecha-chave,
+.key,
 .url code {
-    margin-left: -70px;;
+    margin-left: -75px;
+}
+
+.fecha-colchete {
+    margin-left: -65px; 
 }
 
 .key {
+    color: cornflowerblue;
+}
+
+.key, 
+.value,
+.abre-chave,
+.fecha-chave,
+.abre-colchete,
+.fecha-colchete  {
+    font-size: 0.9em;
+}
+
+.str {
     color: #ff9266;
 }
 
-.value {
-    color: #CD5A58;
+.num {
+    color: limegreen;
 }
 
-ul {
-    list-style-type: none;
-    line-height: 30px;
-}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
 
-p {
-    line-height: 20px;
-}
+    /* todas as Páginas */
+    .header {
+        height: 100px;
+        justify-content: center;
+    }
 
-a {
-    margin-bottom: 8px;
-    text-decoration: none;
-}
+    .footer {
+        height: 100px;
+    }
 
-h2, h3, h4, h5 {
-    font-family: 'Righteous', cursive;
-}
+    .container {
+        margin: 1.5%;
+    }
 
-h2 {
-    color: #fff;
-    font-size: 3em;
-}
+    h2 {
+        font-size: 2.2em;
+    }
 
-h5 {
-    color: #888888;
-}
+    /* Página Home */
+    .links p {
+        text-align: center;
+    }
 
-li, p, a, span, strong {
-    font-family: 'Ubuntu', sans-serif;
-}
+    .link-wrapper {
+        flex-direction: column;
+    }
+
+    .link-wrapper a {
+        background-color: #31708F;
+        color: #FFFFFF;
+        text-align: center;
+        padding: 10px;
+    }
+
+    /* Página Documentação */
+
+    .tab code {
+        display: block;
+        text-align: center;
+        margin-bottom: 2%;
+    }
+    
+    .url code {
+        font-size: 0.8em;
+    }
+
+  }
