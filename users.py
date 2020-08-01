@@ -1,29 +1,54 @@
 import sqlite3
 
-# Função para inserir um usuário
-def data_insert(nome, email, senha):
-    conn = sqlite3.connect('./data/users.db') # Criando uma conexão
-    c = conn.cursor() # Criando um cursor
+def abre_conexao():
+    # Criando uma conexão
+    conn = sqlite3.connect('./data/users.db')
+    # Criando um cursor
+    c = conn.cursor()
+    return conn, c
 
+def fecha_conexao(conn, c):
+    c.close()
+    conn.close()
+    return
+
+# Função para inserir um usuário
+def insere_usuario(nome, email, senha):
+    conn, c = abre_conexao()
     sql_insert = 'insert into user (nome, email, senha) values (?, ?, ?)'
     c.execute(sql_insert, (nome, email, senha))
     conn.commit()
-    c.close()
-    conn.close()
+    fecha_conexao(conn,c)
+    return
 
-# Leitura de registros específicos        
+# Busca usuário por email e senha       
 def busca_usuario(email, senha):
-    conn = sqlite3.connect('./data/users.db') # Criando uma conexão
-    c = conn.cursor() # Criando um cursor
-
-    sql_select = 'select nome, email from user where email == ? and senha == ?'
+    conn, c = abre_conexao()
+    sql_select = 'select nome, email, senha from user where email == ? and senha == ?'
     c.execute(sql_select, (email, senha))
     result = ''
     for registro in c.fetchall():
         result = registro 
-    
-    c.close() # Fechando cursor
-    conn.close() # Fechando conexão
-    if result == []:
-        return 0
-    return result
+    fecha_conexao(conn,c)
+    if not result:
+        return None
+    return {"nome": result[0], "email": result[1], "senha": result[2]}
+
+# Busca usuário por email
+def usuario_por_email(email):
+    conn, c = abre_conexao()
+    sql_select = 'select nome, email, senha from user where email == ?'
+    c.execute(sql_select, (email,))
+    result = ''
+    for registro in c.fetchall():
+        result = registro 
+    fecha_conexao(conn,c)
+    if not result:
+        return None
+    return {"nome": result[0], "email": result[1], "senha": result[2]}
+
+def checa_senha(senha_usuario, senha_autenticacao):
+    if senha_usuario == senha_autenticacao:
+        return True
+    return False 
+
