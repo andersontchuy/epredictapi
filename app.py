@@ -1,15 +1,17 @@
 #coding: utf-8
 import os
 import helper
-from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
+from flask_sslify import SSLify
 from flask_compress import Compress
+from flask import Flask, jsonify, render_template, request, redirect
 from model import mostraPredicaoGeral, mostraPredicaoPorCurso, mostraPredicaoAluno
 
 app = Flask(__name__)
 app.config.from_object('config')
 CORS(app, supports_credentials=True)
 Compress(app)
+SSLify(app, permanent=True)
 
 @app.route('/', methods=['GET'])
 def home():
