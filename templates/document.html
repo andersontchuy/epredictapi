@@ -23,22 +23,22 @@
             </p>
         </div>
         <hr>
-        <!-- <div>
+        <div>
             <h3>Acesso API de predição</h3>
-            <p> O acesso a API de dados é público, não é necessario criar uma conta 
-                tampuco autenticar.
+            <p> O acesso a API de dados é privado, é necessario ter uma conta 
+                de usuário com autenticação por token.
             </p>
         </div>
-        <hr> -->
+        <hr>
         <div>
             <h3>Estrutura das Requisições</h3>
             <blockquote>
                 <h4>URL</h4>
                 <p>
-                    É necessário fazer uma chamada HTTP, método <strong>GET</strong>, 
+                    É necessário fazer uma chamada <a href="#https">HTTPS</a>, método <strong>GET</strong>, 
                     para URL 
                     <span><strong>
-                        http://epredictapi.herokuapp.com/
+                        https://epredictapi.herokuapp.com/
                         <code>predict</code>
                         /
                         <code>method</code>
@@ -184,7 +184,7 @@
                      e nem de argumento para a requisição da predição geral de evasão.</p>
             </blockquote>
             <pre class="url">
-                <code>http://epredictapi.herokuapp.com/evasao/</code>
+            <code>https://epredictapi.herokuapp.com/evasao/</code>
             </pre>
             <blockquote>
                 <h4>Exemplo de retorno</h4>
@@ -342,7 +342,7 @@
                 <p> Requisição que passa a sigla do curso de Engenharia de Software como argumento.</p>
             </blockquote>
             <pre class="url">
-            <code>http://epredictapi.herokuapp.com/evasao/curso/es</code>
+           <code>https://epredictapi.herokuapp.com/evasao/curso/es</code>
             </pre>
             <blockquote>
                 <h4>Exemplo de retorno</h4>
@@ -357,7 +357,7 @@
                         <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
                         <span class="key">"cor_raca"</span>: <span class="value str">"Pardo"</span>,
                         <span class="key">"escola_publica"</span>: <span class="value str">"SIM"</span>,
-                        <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                        <span class="key">"forma_ingresso"</span>: <span class="value str">"PROCESSO SELETIVO"</span>,
                         <span class="key">"matricula"</span>: <span class="value str">"000000000"</span>,
                         <span class="key">"media_global_aluno"</span>: <span class="value num">1.65</span>,
                         <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
@@ -371,7 +371,7 @@
                         <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
                         <span class="key">"cor_raca"</span>: <span class="value str">"Pardo"</span>,
                         <span class="key">"escola_publica"</span>: <span class="value str">"NÃO"</span>,
-                        <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                        <span class="key">"forma_ingresso"</span>: <span class="value str">"SiSU"</span>,
                         <span class="key">"matricula"</span>: <span class="value str">"111111111"</span>,
                         <span class="key">"media_global_aluno"</span>: <span class="value num">3.31</span>,
                         <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
@@ -385,7 +385,7 @@
                         <span class="key">"cidade_endereco"</span>: <span class="value str">"Goiania"</span>,
                         <span class="key">"cor_raca"</span>: <span class="value str">"Branco"</span>,
                         <span class="key">"escola_publica"</span>: <span class="value str">"NÃO"</span>,
-                        <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                        <span class="key">"forma_ingresso"</span>: <span class="value str">"TRANSFERÊNCIA"</span>,
                         <span class="key">"matricula"</span>: <span class="value str">"222222222"</span>,
                         <span class="key">"media_global_aluno"</span>: <span class="value num">2.26</span>,
                         <span class="key">"media_global_curso"</span>: <span class="value num">5.2</span>,
@@ -550,7 +550,7 @@
                 <p> Requisição que passa matrícula do aluno como argumento.</p>
             </blockquote>
             <pre class="url">
-                <code>http://epredictapi.herokuapp.com/evasao/aluno/999999999</code>
+           <code>https://epredictapi.herokuapp.com/evasao/aluno/001</code>
             </pre>
             <blockquote>
                 <h4>Exemplo de retorno</h4>
@@ -568,7 +568,7 @@
                     <span class="key">"escola_ensino_medio"</span>: <span class="value str">"COLÉGIO POSITIVO"</span>,
                     <span class="key">"escola_publica"</span>: <span class="value str">"SIM"</span>,
                     <span class="key">"especificidade_ingresso"</span>: <span class="value str">""</span>,
-                    <span class="key">"forma_ingresso"</span>: <span class="value str">"INGRESSO PROCESSO SELETIVO"</span>,
+                    <span class="key">"forma_ingresso"</span>: <span class="value str">"PROCESSO SELETIVO"</span>,
                     <span class="key">"grau_academico"</span>: <span class="value str">"BACHARELADO"</span>,
                     <span class="key">"idade_ingresso"</span>: <span class="value num">"23"</span>,
                     <span class="key">"ideb_escola_ensino_medio"</span>: <span class="value num">5.3</span>,
@@ -592,7 +592,7 @@
             <h3>Glossário</h3>
             <blockquote>
                 <div class="tab-domain">
-                    <span id="api"><strong>API</strong></span> - <em>Conjunto de rotinas e padrões para acesso a 
+                    <span id="api"><strong>API (Application Programming Interface)</strong></span> - <em>Significa Interface de Programação de Aplicação e basicamente é um conjunto de rotinas e padrões para acesso a 
                         um aplicativo ou plataforma</em><hr>
                 </div><br>
                 <div class="tab-domain">
@@ -608,6 +608,11 @@
                 <div class="tab-domain">
                     <span id="dominio_de_dados"><strong>Domínio de dados</strong></span> - <em>Conjunto de valores possíveis para 
                         um determinado campo</em><hr>
+                </div><br>
+                <div class="tab-domain">
+                    <span id="https"><strong>HTTPS (Hyper Text Transfer Protocol Secure)</strong></span> - <em>Significa 
+                        protocolo de transferência de hipertexto seguro, é uma implementação do protocolo HTTP sobre uma 
+                        camada adicional de segurança que utiliza o protocolo SSL/TLS.</em><hr>
                 </div><br>
                 <div class="tab-domain">
                     <span id="inteiro"><strong>Inteiro</strong></span> - <em>Tipo de dado númerico, representa 
