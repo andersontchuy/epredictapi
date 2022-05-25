@@ -10,6 +10,6 @@ scikit_learn==0.22.1
 Flask-Cors==3.0.8
 Flask-Compress==1.5.0
 Unidecode==1.1.1
-PyJWT==1.7.1
+PyJWT==2.4.0
 Flask-SSLify==0.1.5
 
