@@ -4,7 +4,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 Werkzeug==1.0.1
-numpy==1.19.0
+numpy==1.22.0
 pandas==1.0.5
 scikit_learn==0.22.1
 Flask-Cors==3.0.8
